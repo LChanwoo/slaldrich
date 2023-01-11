@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
 @Entity("channels")
 export class Channels extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -8,7 +9,7 @@ export class Channels extends BaseEntity {
     name: string;
 
     @Column()
-    private: string;
+    private: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
