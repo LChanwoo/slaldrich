@@ -3,38 +3,51 @@ import Link from 'next/link';
 
 const Sidebar: FC = () => {
   return (
-    <div>
-      <div style={{ marginBottom: 15 }}>
+    <>
+      <div className='border-b-2 border-b-bblack-600 p-2 text-base font-extrabold uppercase ' >
         <Link href="/views/home" as="/">
-          <a
-            style={{
-              fontSize: 22,
-              textDecoration: 'none',
-              textTransform: 'uppercase',
-            }}
-          >
-            EXAMPLE APP
-          </a>
+            Slaldrich 워크스페이스
         </Link>
       </div>
-      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-        <li>
+      {/* 채널 */}
+      <ul className='p-2'>
+        채널
+        <li className='py-1'>
           <Link href="/views/home" as="/">
-            <a>Home</a>
+            <a># Home</a>
           </Link>
         </li>
-        <li>
+        <li className='py-1'>
           <Link href="/views/about" as="/about">
-            <a>About</a>
+            <a># About</a>
           </Link>
         </li>
-        <li>
+        <li className='py-1'>
           <Link href="/views/blog" as="/blog" prefetch={false}>
-            <a>Blog</a>
+            <a># Blog</a>
           </Link>
         </li>
       </ul>
-    </div>
+      {/* 다이렉트메시지 */}
+      <ul className='p-2'>
+        다이렉트 메시지
+        <li className='py-1'>
+          <Link href="/views/home" as="/">
+            <a># 서명인</a>
+          </Link>
+        </li>
+        <li className='py-1'>
+          <Link href="/views/about" as="/about">
+            <a># 이찬우</a>
+          </Link>
+        </li>
+        <li className='py-1'>
+          <Link href="/views/blog" as="/blog" prefetch={false}>
+            <a># 조경철</a>
+          </Link>
+        </li>
+      </ul>
+    </>
   );
 };
 

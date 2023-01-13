@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, DeleteDateColumn, OneToMany, JoinTable, ManyToMany } from 'typeorm';
-import { ChannelChats } from './channelChats';
+import { ChannelChats } from './ChannelChats';
 import { ChannelMembers } from './ChannelMembers';
 import { Channels } from './Channels';
 import { Dms } from './Dms';
-import { Mentions } from './mentions';
+import { Mentions } from './Mentions';
 import { WorkspaceMembers } from './WorkspaceMembers';
 import { Workspaces } from './Workspaces';
 

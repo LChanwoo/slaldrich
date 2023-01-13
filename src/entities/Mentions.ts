@@ -1,27 +1,50 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-@Entity("mentions")
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import Users from "./Users";
+import { Workspaces } from "./Workspaces";
+@Entity({ schema: 'slardrich', name: 'mentions' })
 export class Mentions extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    category: number;
+    type: 'chat'|'dm'|'system';
 
     @Column()
-    chatId: number;
+    ChatId: number;
 
     @Column()
-    workspaceId: number;
+    WorkspaceId: number;
 
     @Column()
-    senderId: number;
+    SenderId: number;
 
     @Column()
-    receiverId: number;
+    ReceiverId: number;
 
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @ManyToOne(()=>Workspaces, workspace=>workspace.Mentions,{
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
+    })
+    @JoinColumn({name: 'WorkspaceId', referencedColumnName: 'id'})
+    Workspace: Workspaces;
+
+    @ManyToOne(()=>Users, user=>user.Mentions,{
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
+    })
+    @JoinColumn({name: 'SenderId', referencedColumnName: 'id'})
+    Sender: Users;
+
+    @ManyToOne(()=>Users, user=>user.Mentions,{
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
+    })
+    @JoinColumn({name: 'ReceiverId', referencedColumnName: 'id'})
+    Receiver: Users;
 }
