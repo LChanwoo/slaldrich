@@ -3,9 +3,10 @@ import { redirect } from "next/dist/server/api-utils";
 import { useEffect } from "react";
 
 
-const clientId = '51512082009-ta7bqeitl13lne57snfmf4h9qtd0vm4v.apps.googleusercontent.com';
+const clientId = process.env.OAUTH_GOOGLE_ID || "51512082009-fsl6ssmlpqu33tde8f42p8o8j0te1i57.apps.googleusercontent.com";
 
 const GoogleButton = () => {
+    console.log("clientId: ", clientId)
     const onSuccess = (res: any) => {
         console.log('[Login Success] currentUser:', res);
         // window.location.href="/";
@@ -18,7 +19,7 @@ const GoogleButton = () => {
     }
     return(
         <div>
-            <GoogleOAuthProvider clientId={clientId}>
+            <GoogleOAuthProvider clientId={clientId!}>
             <GoogleLogin
                 onSuccess={onSuccess}
                 onError={()=>{console.log("error")}}
