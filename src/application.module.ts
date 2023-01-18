@@ -16,6 +16,9 @@ import { Workspaces } from './entities/Workspaces';
 import { MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { WorkspacesModule } from './workspaces/workspaces.module';
+import { ChannelsModule } from './channels/channels.module';
+import { EventsModule } from './events/events.module';
+import { DmsModule } from './dms/dms.module';
 
 @Module({
   imports: [
@@ -39,7 +42,7 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
       // autoLoadEntities: true,
       // dropSchema: true,
     }), 
-    AuthModule, UsersModule, WorkspacesModule,
+    AuthModule, UsersModule, WorkspacesModule, ChannelsModule, EventsModule, DmsModule,
   ],
   controllers: [AppController],
   providers: [],
