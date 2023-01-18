@@ -11,8 +11,6 @@ import { Channels } from '../entities/Channels';
 export class UsersService {
     constructor(
         @InjectRepository(Users) private usersRepository: Repository<Users>,
-        @InjectRepository(Workspacemembers)
-        private workspaceMembersRepository: Repository<Workspacemembers>,
         @InjectRepository(Channelmembers)
         private channelMembersRepository: Repository<Channelmembers>,
         ///

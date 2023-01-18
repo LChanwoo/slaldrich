@@ -13,6 +13,9 @@ import { Dms } from './entities/Dms';
 import { Mentions } from './entities/Mentions';
 import { Workspacemembers } from './entities/WorkspaceMembers';
 import { Workspaces } from './entities/Workspaces';
+import { MiddlewareConsumer } from '@nestjs/common';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { WorkspacesModule } from './workspaces/workspaces.module';
 
 @Module({
   imports: [
@@ -36,9 +39,13 @@ import { Workspaces } from './entities/Workspaces';
       // autoLoadEntities: true,
       // dropSchema: true,
     }), 
-    AuthModule, UsersModule,
+    AuthModule, UsersModule, WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

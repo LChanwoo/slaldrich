@@ -10,12 +10,13 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private usersService : UsersService) {}
 
-    // @UseGuards(LocalAuthGuard)
+    @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@User() user: Users) {
-      return user;
+        console.log(user)
+        return user;
     }
-    // @UseGuards(NotLoggedInGuard)
+    @UseGuards(NotLoggedInGuard)
     @Post()
     async join(@Body() data: JoinRequestDto) {
         console.log(data)
@@ -39,6 +40,12 @@ export class UsersController {
     async test() {
         return this.usersService.test();
     }
+    @Get('test2')
+    async test2(@User() user: Users) {
+        console.log(user)
+        return {user} 
+    }
+
 
 
 }

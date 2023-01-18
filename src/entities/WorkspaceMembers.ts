@@ -38,7 +38,7 @@ import {
     @JoinColumn([{ name: 'workspaceid', referencedColumnName: 'id' }])
     workspace: Workspaces;
   
-    @ManyToOne(() => Users, (users) => users.workspaceMembers, {
+    @ManyToOne(() => Users, (users) => users.workspacemembers, {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     })

@@ -50,7 +50,7 @@ export default class Users extends BaseEntity {
     mentions2: Mentions[];
 
     @OneToMany(()=>Workspacemembers, (workspaceMembers)=>workspaceMembers.user)
-    workspaceMembers: Workspacemembers[];
+    workspacemembers: Workspacemembers[];
 
     @OneToMany(()=>Workspaces, (workspaceMembers)=>workspaceMembers.owner)
     ownedWorkspaces: Workspaces[];
