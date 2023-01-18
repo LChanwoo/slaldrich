@@ -1,4 +1,4 @@
-import InputGroup from "components/InputGroup";
+import InputGroup from "../../components/InputGroup";
 import { useState } from "react";
 
 const RegisterPage = () => {

@@ -1,10 +1,10 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ChannelChats } from "./ChannelChats";
-import { ChannelMembers } from "./ChannelMembers";
+import { Channelmembers } from "./ChannelMembers";
 import Users from "./Users";
 import { Workspaces } from "./Workspaces";
 
-@Entity("channels")
+@Entity("channels", { schema: 'public' })
 export class Channels extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -24,21 +24,21 @@ export class Channels extends BaseEntity {
     @Column()
     workspaceId: number;
 
-    @OneToMany(()=>ChannelChats, channelChat=>channelChat.Channel)
-    ChannelChats: ChannelChats[];
+    @OneToMany(()=>ChannelChats, channelChat=>channelChat.channel)
+    channelChats: ChannelChats[];
 
-    @OneToMany(()=>ChannelMembers, channelMember=>channelMember.Channel,{
+    @OneToMany(()=>Channelmembers, channelMember=>channelMember.channel,{
         cascade:['insert']
     })
-    ChannelMembers: ChannelMembers[];
+    channelMembers: Channelmembers[];
 
 
-    @ManyToMany(() => Users, (users) => users.Channels)
-    Members: Users[];
+    @ManyToMany(() => Users, (users) => users.channels)
+    members: Users[];
 
-    @ManyToOne(()=>Workspaces, workspace=>workspace.Channels,{
+    @ManyToOne(()=>Workspaces, workspace=>workspace.channels,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    Workspace: Workspaces;
+    workspace: Workspaces;
 }

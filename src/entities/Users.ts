@@ -1,19 +1,19 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, DeleteDateColumn, OneToMany, JoinTable, ManyToMany } from 'typeorm';
 import { ChannelChats } from './ChannelChats';
-import { ChannelMembers } from './ChannelMembers';
+import { Channelmembers } from './ChannelMembers';
 import { Channels } from './Channels';
 import { Dms } from './Dms';
 import { Mentions } from './Mentions';
-import { WorkspaceMembers } from './WorkspaceMembers';
+import { Workspacemembers } from './WorkspaceMembers';
 import { Workspaces } from './Workspaces';
 
 
-@Entity({ schema: 'slardrich', name: 'users' })
+@Entity('users', { schema: 'public' })
 export default class Users extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique: true})
     email: string;
 
     @Column()
@@ -31,31 +31,31 @@ export default class Users extends BaseEntity {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @OneToMany(()=>ChannelChats, (channelChats)=>channelChats.User)
-    ChannelChats: ChannelChats[];
+    @OneToMany(()=>ChannelChats, (channelChats)=>channelChats.user)
+    channelChats: ChannelChats[];
 
-    @OneToMany(()=>ChannelMembers, (channelMembers)=>channelMembers.User)
-    ChannelMembers: ChannelMembers[];
+    @OneToMany(()=>Channelmembers, (channelMembers)=>channelMembers.user)
+    channelMembers: Channelmembers[];
 
-    @OneToMany(()=>Dms, (dms)=>dms.Sender)
-    Dms: Dms[];
+    @OneToMany(()=>Dms, (dms)=>dms.sender)
+    dms: Dms[];
 
-    @OneToMany(()=>Dms, (dms)=>dms.Receiver)
-    Dms2: Dms[];
+    @OneToMany(()=>Dms, (dms)=>dms.receiver)
+    dms2: Dms[];
 
-    @OneToMany(()=>Mentions, (mentions)=>mentions.Sender)
-    Mentions: Mentions[];
+    @OneToMany(()=>Mentions, (mentions)=>mentions.sender)
+    mentions: Mentions[];
 
-    @OneToMany(()=>Mentions, (mentions)=>mentions.Receiver)
-    Mentions2: Mentions[];
+    @OneToMany(()=>Mentions, (mentions)=>mentions.receiver)
+    mentions2: Mentions[];
 
-    @OneToMany(()=>WorkspaceMembers, (workspaceMembers)=>workspaceMembers.User)
-    WorkspaceMembers: WorkspaceMembers[];
+    @OneToMany(()=>Workspacemembers, (workspaceMembers)=>workspaceMembers.user)
+    workspaceMembers: Workspacemembers[];
 
-    @OneToMany(()=>Workspaces, (workspaceMembers)=>workspaceMembers.Owner)
-    OwnedWorkspaces: Workspaces[];
+    @OneToMany(()=>Workspaces, (workspaceMembers)=>workspaceMembers.owner)
+    ownedWorkspaces: Workspaces[];
 
-    @ManyToMany(()=>Workspaces, (Workspaces)=>Workspaces.Members)
+    @ManyToMany(()=>Workspaces, (Workspaces)=>Workspaces.members)
     @JoinTable({
         name: 'workspaceMembers',
         joinColumn: {
@@ -67,21 +67,21 @@ export default class Users extends BaseEntity {
             referencedColumnName: 'id',
         },
     })
-    Workspaces: Workspaces[];
+    workspaces: Workspaces[];
 
-    @ManyToMany(()=>Channels, (channels)=>channels.Members)
+    @ManyToMany(()=>Channels, (channels)=>channels.members)
     @JoinTable({
         name: 'channelMembers',
         joinColumn: {
-            name: 'userId',
+            name: 'userid',
             referencedColumnName: 'id',
         },
         inverseJoinColumn: {
-            name: 'channelId',
+            name: 'channelid',
             referencedColumnName: 'id',
         },
     })
-    Channels: Channels[];
+    channels: Channels[];
 
 
 

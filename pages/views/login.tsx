@@ -1,7 +1,7 @@
-import InputGroup from '../components/InputGroup'
+import InputGroup from '../../components/InputGroup'
 import { useState } from 'react'
 import Link from 'next/link'
-import GoogleButton from '../components/GoogleButton'
+import GoogleButton from '../../components/GoogleButton'
 import { NextPage } from 'next'
 
 
@@ -27,15 +27,17 @@ const Login : NextPage = ()=> {
                 setValue={setPassword}
                 error={errors.password}
             ></InputGroup>
-            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
+            <button className="w-full py-2 mb-1 text-sm font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
                 로그인
             </button>
           </form>
           <GoogleButton/><br></br>
           <small>
               아직 아이디가 없나요
-              <Link href="/register" className="ml-1 text-blue-500 uppercase" >
+              <Link href="/register" >
+                <a className="ml-1 text-blue-500 uppercase">
                   회원가입
+                </a>
               </Link>
           </small>
           

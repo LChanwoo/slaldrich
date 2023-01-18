@@ -2,16 +2,16 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, Pr
 import { Channels } from "./Channels";
 import Users from "./Users";
 
-@Entity({ schema: 'slaldrich', name: 'channelchats' })
+@Entity('channelchats', { schema: 'public' } )
 export class ChannelChats extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    UserId: number;
+    userId: number;
 
     @Column()
-    ChannelId: number;
+    channelId: number;
 
     @Column()
     content: string;
@@ -22,18 +22,18 @@ export class ChannelChats extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(()=>Users, user=>user.ChannelChats,{
+    @ManyToOne(()=>Users, user=>user.channelChats,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'UserId', referencedColumnName: 'id'})
-    User: Users;
+    @JoinColumn({name: 'userid', referencedColumnName: 'id'})
+    user: Users;
 
-    @ManyToOne(()=>Channels, channel=>channel.ChannelChats,{
+    @ManyToOne(()=>Channels, channel=>channel.channelChats,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'ChannelId', referencedColumnName: 'id'})
-    Channel: Channels;
+    @JoinColumn({name: 'channelid', referencedColumnName: 'id'})
+    channel: Channels;
 
 }

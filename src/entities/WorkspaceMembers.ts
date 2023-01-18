@@ -1,35 +1,48 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import Users from "./Users";
-import { Workspaces } from "./Workspaces";
-@Entity('workspaceMembers', { schema: 'slardrich' })
-export class WorkspaceMembers extends BaseEntity {
-    @Column()
-    WorkspacesId: number;
-
-    @Column()
-    UserId: number;
-
-    @Column()
-    loggedInAt: number;
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+  } from 'typeorm';
+  import { Workspaces } from './Workspaces';
+  import Users  from './Users';
+  
+  @Entity('workspacemembers', { schema: 'public' })
+  export class Workspacemembers {
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @CreateDateColumn()
     createdAt: Date;
-
+  
     @UpdateDateColumn()
     updatedAt: Date;
-
-    @ManyToOne(()=>Workspaces, workspace=>workspace.WorkspaceMembers,{
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+  
+    @Column('int')
+    workspaceid: number;
+  
+    @Column('int')
+    userid: number;
+  
+    @Column('date', { name: 'loggedInAt', nullable: true })
+    loggedInAt: Date | null;
+  
+    @ManyToOne(() => Workspaces, (workspaces) => workspaces.workspaceMembers, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     })
-    @JoinColumn({name: 'WorkspacesId', referencedColumnName: 'id'})
-    Workspace: Workspaces;
-
-    @ManyToOne(()=>Users, user=>user.WorkspaceMembers,{
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+    @JoinColumn([{ name: 'workspaceid', referencedColumnName: 'id' }])
+    workspace: Workspaces;
+  
+    @ManyToOne(() => Users, (users) => users.workspaceMembers, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     })
-    @JoinColumn({name: 'UserId', referencedColumnName: 'id'})
-    User: Users;
-
-}
+    @JoinColumn([{ name: 'userid', referencedColumnName: 'id' }])
+    user: Users;
+  }
+  

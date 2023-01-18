@@ -2,7 +2,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, M
 import Users from "./Users";
 import { Workspaces } from "./Workspaces";
 
-@Entity({ schema: 'slardrich', name: 'dms' })
+@Entity('dms' , { schema: 'public' })
 export class Dms extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -17,33 +17,33 @@ export class Dms extends BaseEntity {
     updatedAt: Date;
 
     @Column()
-    WorkspaceId: number;
+    workspaceId: number;
 
     @Column()
-    SenderId: number;
+    senderId: number;
 
     @Column()
-    ReceiverId: number;
+    receiverId: number;
 
-    @ManyToOne(()=>Users, user=>user.Dms,{
+    @ManyToOne(()=>Users, user=>user.dms,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'SenderId', referencedColumnName: 'id'})
-    Sender: Users;
+    @JoinColumn({name: 'senderId', referencedColumnName: 'id'})
+    sender: Users;
 
-    @ManyToOne(()=>Users, user=>user.Dms,{
+    @ManyToOne(()=>Users, user=>user.dms,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
     @JoinColumn({name: 'ReceiverId', referencedColumnName: 'id'})
-    Receiver: Users;
+    receiver: Users;
 
-    @ManyToOne(()=>Workspaces, workspace=>workspace.Dms,{
+    @ManyToOne(()=>Workspaces, workspace=>workspace.dms,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'WorkspaceId', referencedColumnName: 'id'})
-    Workspace: Workspaces;
+    @JoinColumn({name: 'workspaceId', referencedColumnName: 'id'})
+    workspace: Workspaces;
 
 }

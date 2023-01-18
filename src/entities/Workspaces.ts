@@ -3,9 +3,9 @@ import { Channels } from "./Channels";
 import { Dms } from "./Dms";
 import { Mentions } from "./Mentions";
 import Users from "./Users";
-import { WorkspaceMembers } from "./WorkspaceMembers";
+import { Workspacemembers } from "./WorkspaceMembers";
 
-@Entity({ schema: 'slardrich', name: 'workspaces' })
+@Entity( 'workspaces', { schema: 'public' } )
 export class Workspaces extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -26,30 +26,30 @@ export class Workspaces extends BaseEntity {
     deletedAt: Date;
 
     @Column()
-    OwnerId: number;
+    ownerId: number;
 
-    @OneToMany(()=>Channels, channel=>channel.Workspace)
-    Channels: Channels[];
+    @OneToMany(()=>Channels, channel=>channel.workspace)
+    channels: Channels[];
 
-    @OneToMany(()=>Dms, dm=>dm.Workspace)
-    Dms: Dms[];
+    @OneToMany(()=>Dms, dm=>dm.workspace)
+    dms: Dms[];
 
-    @OneToMany(()=>Mentions, mention=>mention.Workspace)
-    Mentions: Mentions[];
+    @OneToMany(()=>Mentions, mention=>mention.workspace)
+    mentions: Mentions[];
 
-    @OneToMany(()=>WorkspaceMembers, workspaceMember=>workspaceMember.Workspace,
+    @OneToMany(()=>Workspacemembers, workspaceMember=>workspaceMember.workspace,
     {cascade: ['insert']})
-    WorkspaceMembers: WorkspaceMembers[];
+    workspaceMembers: Workspacemembers[];
 
-    @ManyToOne(()=>Users, user=>user.Workspaces,{
+    @ManyToOne(()=>Users, user=>user.workspaces,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'OwnerId', referencedColumnName: 'id'})
-    Owner: Users;
+    @JoinColumn({name: 'ownerId', referencedColumnName: 'id'})
+    owner: Users;
 
-    @ManyToMany(()=>Users, user=>user.Workspaces)
-    Members: Users[];
+    @ManyToMany(()=>Users, user=>user.workspaces)
+    members: Users[];
 
 
 
