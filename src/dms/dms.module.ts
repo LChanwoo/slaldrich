@@ -9,7 +9,7 @@ import { DmsController } from './dms.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Dms, Users, Workspaces]), EventsModule],
-  controllers: [DmsController, DmsController],
+  controllers: [DmsController],
   providers: [DmsService],
 })
-export class DMsModule {}
+export class DmsModule {}

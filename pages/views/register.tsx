@@ -1,15 +1,26 @@
 import InputGroup from "../../components/InputGroup";
 import { useState } from "react";
-
+import axios from "axios";
+import Router from "next/router";
 const RegisterPage = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState<string>("");
     const [passwordCheck, setPasswordCheck] = useState<string>("");
     const [errors, setErrors] = useState<any>({});
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log("username: ", username);
-        // console
+        const nickname = "test"+ Math.floor(Math.random() * 9999);
+        
+        axios
+        .post('/api/users', { email, nickname, password })
+        .then(() => {
+            // alert("회원가입이 완료되었습니다.")
+            Router.push('/login');
+        })
+        .catch((error) => {
+            setErrors(error.response.data);
+        }); 
+
     };
     
     return (
@@ -18,9 +29,9 @@ const RegisterPage = () => {
         <h1>회원가입</h1>
             <InputGroup
               placeholder="email"
-              value={username}
-              setValue={setUsername}
-              error={errors.username}
+              value={email}
+              setValue={setEmail}
+              error={errors.email}
             ></InputGroup>
             <InputGroup
                 placeholder="Password"

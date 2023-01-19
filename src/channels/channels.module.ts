@@ -5,6 +5,7 @@ import { Channelmembers } from '../entities/ChannelMembers';
 import { Channels } from '../entities/Channels';
 import Users from '../entities/Users';
 import { Workspaces } from '../entities/Workspaces';
+import { EventsModule } from '../events/events.module';
 import { ChannelsController } from './channels.controller';
 import { ChannelsService } from './channels.service';
 
@@ -17,7 +18,7 @@ import { ChannelsService } from './channels.service';
       Workspaces,
       Channelmembers,
     ]),
-    // EventsModule,
+    EventsModule,
   ],
   providers: [ChannelsService],
   controllers: [ChannelsController],

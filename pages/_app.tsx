@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import type { AppProps /*, AppContext */ } from 'next/app';
 import Sidebar from '../components/sidebar';
-import NavBar from '../components/navbar';
-import WokrspaceBar from '../components/workspacebar';
+import NavBar from '../components/NavBar';
+import WokrspaceBar from '../components/WorkspaceBar';
 import '../styles/global.css';
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
+    asds
     <NavBar/>
     <div className='flex w-screen'>
       <WokrspaceBar/>
