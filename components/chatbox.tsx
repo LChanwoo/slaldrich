@@ -2,6 +2,7 @@ import autosize from 'autosize';
 import gravatar from 'gravatar';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Mention, SuggestionDataItem } from 'react-mentions';
+import { EachMention, MentionsTextarea, SendButton, Toolbox } from './styles/chatbox_style';
 
 const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
   const textareaRef = useRef(null);
@@ -29,18 +30,18 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
         return null;
       }
       return (
-        // <EachMention focus={focus}>
-        //   <img src={gravatar.url(data[index].email, { s: '20px', d: 'retro' })} alt={data[index].nickname} />
-        //   <span>{highlightedDisplay}</span>
-        // </EachMention>
+        <EachMention focus={focus}>
+          <img src={gravatar.url(data[index].email, { s: '20px', d: 'retro' })} alt={data[index].nickname} />
+          <span>{highlightedDisplay}</span>
+        </EachMention>
       );
     },
     [data],
   );
 
   return (
-    <ChatArea>
-      <Form onSubmit={onSubmitForm}>
+    <div className='flex w-full p-5 pt-0'>
+      <form className='text-sm w-full rounded border-solid border' onSubmit={onSubmitForm}>
         <MentionsTextarea
           id="editor-chat"
           value={chat}
@@ -72,8 +73,8 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
             <i className="c-icon c-icon--paperplane-filled" aria-hidden="true" />
           </SendButton>
         </Toolbox>
-      </Form>
-    </ChatArea>
+      </form>
+    </div>
   );
 };
 

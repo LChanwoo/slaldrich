@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
+import ChatBox from "../../components/ChatBox";
 import ChatList from "../../components/ChatList";
 import useInput from "../../hooks/useInput";
 import makeSection from "../../utils/makeSection";
@@ -142,6 +143,13 @@ const PAGE_SIZE = 20;
                 isEmpty={isEmpty}
                 chatSections={chatSections}
                 setSize={setSize}
+            />
+            <ChatBox
+                onSubmitForm={onSubmitForm}
+                chat={chat}
+                onChangeChat={onChangeChat}
+                placeholder={`Message #${channel}`}
+                data={channelMembersData}
             />
         </div>
         
