@@ -26,7 +26,7 @@ export class Workspaces extends BaseEntity {
     deletedAt: Date;
 
     @Column()
-    ownerId: number;
+    ownerid: number;
 
     @OneToMany(()=>Channels, channel=>channel.workspace)
     channels: Channels[];
@@ -39,13 +39,13 @@ export class Workspaces extends BaseEntity {
 
     @OneToMany(()=>Workspacemembers, workspaceMember=>workspaceMember.workspace,
     {cascade: ['insert']})
-    workspaceMembers: Workspacemembers[];
+    workspacemembers: Workspacemembers[];
 
     @ManyToOne(()=>Users, user=>user.workspaces,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'ownerId', referencedColumnName: 'id'})
+    @JoinColumn({name: 'ownerid', referencedColumnName: 'id'})
     owner: Users;
 
     @ManyToMany(()=>Users, user=>user.workspaces)

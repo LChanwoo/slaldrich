@@ -41,7 +41,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
       entities: [Users,ChannelChats,Channels,Channelmembers,Dms,Mentions,Workspacemembers,Workspaces],
       // migrations: ['./migrations/*.js'],
       synchronize: true,
-      // autoLoadEntities: true,
+      autoLoadEntities: true,
       // dropSchema: true,
     }), 
     AuthModule, UsersModule, WorkspacesModule, ChannelsModule, EventsModule, DmsModule,

@@ -17,12 +17,15 @@ try {
   }
   
 @UseGuards(LoggedInGuard)
-@Controller('api/channels')
+@Controller('api/workspaces')
 export class ChannelsController {
     constructor(private channelsService: ChannelsService) {}
 
     @Get(':url/channels')
     async getWorkspaceChannels(@Param('url') url, @User() user: Users) {
+      console.log("channel임")
+      console.log(user.id)
+      console.log(url)
       return this.channelsService.getWorkspaceChannels(url, user.id);
     }
     @Get(':url/channels/:name')

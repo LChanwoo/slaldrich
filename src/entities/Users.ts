@@ -32,10 +32,10 @@ export default class Users extends BaseEntity {
     deletedAt: Date;
 
     @OneToMany(()=>ChannelChats, (channelChats)=>channelChats.user)
-    channelChats: ChannelChats[];
+    channelchats: ChannelChats[];
 
     @OneToMany(()=>Channelmembers, (channelMembers)=>channelMembers.user)
-    channelMembers: Channelmembers[];
+    channelmembers: Channelmembers[];
 
     @OneToMany(()=>Dms, (dms)=>dms.sender)
     dms: Dms[];
@@ -53,17 +53,17 @@ export default class Users extends BaseEntity {
     workspacemembers: Workspacemembers[];
 
     @OneToMany(()=>Workspaces, (workspaceMembers)=>workspaceMembers.owner)
-    ownedWorkspaces: Workspaces[];
+    ownedworkspaces: Workspaces[];
 
     @ManyToMany(()=>Workspaces, (Workspaces)=>Workspaces.members)
     @JoinTable({
-        name: 'workspaceMembers',
+        name: 'workspacemembers',
         joinColumn: {
-            name: 'userId',
+            name: 'userid',
             referencedColumnName: 'id',
         },
         inverseJoinColumn: {
-            name: 'workspaceId',
+            name: 'workspaceid',
             referencedColumnName: 'id',
         },
     })
@@ -71,7 +71,7 @@ export default class Users extends BaseEntity {
 
     @ManyToMany(()=>Channels, (channels)=>channels.members)
     @JoinTable({
-        name: 'channelMembers',
+        name: 'channelmembers',
         joinColumn: {
             name: 'userid',
             referencedColumnName: 'id',

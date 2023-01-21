@@ -1,16 +1,23 @@
+import { ChatArea, Form, MentionsTextarea, SendButton, Toolbox, EachMention } from './styles';
+import { IUser } from '../../typings/db';
 import autosize from 'autosize';
 import gravatar from 'gravatar';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { Mention, SuggestionDataItem } from 'react-mentions';
-import { EachMention, MentionsTextarea, SendButton, Toolbox } from './styles/chatbox_style';
-
-const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
-  const textareaRef = useRef(null);
+interface Props {
+  onSubmitForm: (e: any) => void;
+  chat?: string;
+  onChangeChat: (e: any) => void;
+  placeholder: string;
+  data?: IUser[];
+}
+const ChatBox: FC<Props> = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (textareaRef.current) {
       autosize(textareaRef.current);
     }
-  }, [textareaRef.current]);
+  }, []);
 
   const onKeydownChat = useCallback(
     (e) => {
@@ -21,10 +28,16 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
         }
       }
     },
-    [chat],
+    [onSubmitForm],
   );
 
-  const renderUserSuggestion = useCallback(
+  const renderUserSuggestion: (
+    suggestion: SuggestionDataItem,
+    search: string,
+    highlightedDisplay: React.ReactNode,
+    index: number,
+    focused: boolean,
+  ) => React.ReactNode = useCallback(
     (member, search, highlightedDisplay, index, focus) => {
       if (!data) {
         return null;
@@ -40,8 +53,8 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
   );
 
   return (
-    <div className='flex w-full p-5 pt-0'>
-      <form className='text-sm w-full rounded border-solid border' onSubmit={onSubmitForm}>
+    <ChatArea>
+      <Form onSubmit={onSubmitForm}>
         <MentionsTextarea
           id="editor-chat"
           value={chat}
@@ -73,8 +86,8 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, data }) => {
             <i className="c-icon c-icon--paperplane-filled" aria-hidden="true" />
           </SendButton>
         </Toolbox>
-      </form>
-    </div>
+      </Form>
+    </ChatArea>
   );
 };
 

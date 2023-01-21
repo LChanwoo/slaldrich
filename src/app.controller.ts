@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  @Render('home')
+  @Render('Login')
   @Get()
   public index(@Query('name') name?: string) {
     return { name };
@@ -13,18 +13,18 @@ export class AppController {
   public about() {
     return {};
   }
-  @Render('login')
+  @Render('Login')
   @Get('/login')
   public login() {
     return {};
   }
-  @Render('register')
-  @Get('/register')
+  @Render('Signup')
+  @Get('/signup')
   public register() {
     return {};
   }
-  @Render('channel')
-  @Get('/workspaces/:workspace/channels/:channel')
+  @Render('Workspace')
+  @Get('/workspace/:workspace/channel/:channel')
   public channel(@Param('workspace') workspace: string, @Param('channel') channel: string) {
     return {workspace, channel};
   }

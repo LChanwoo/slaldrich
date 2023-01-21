@@ -8,10 +8,10 @@ export class ChannelChats extends BaseEntity {
     id: number;
 
     @Column()
-    userId: number;
+    userid: number;
 
     @Column()
-    channelId: number;
+    channelid: number;
 
     @Column()
     content: string;
@@ -22,14 +22,14 @@ export class ChannelChats extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(()=>Users, user=>user.channelChats,{
+    @ManyToOne(()=>Users, user=>user.channelchats,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
     @JoinColumn({name: 'userid', referencedColumnName: 'id'})
     user: Users;
 
-    @ManyToOne(()=>Channels, channel=>channel.channelChats,{
+    @ManyToOne(()=>Channels, channel=>channel.channelchats,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })

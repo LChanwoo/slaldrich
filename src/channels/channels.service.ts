@@ -28,6 +28,8 @@ export class ChannelsService {
     }
       
     async getWorkspaceChannels(url: string, myId: number) {
+        console.log("ASDASDASDASDASDASDASDASDASDASD")
+        console.log(url)
         return this.channelsRepository
         .createQueryBuilder('channels')
         .innerJoinAndSelect(
@@ -61,7 +63,7 @@ export class ChannelsService {
         });
         const channel = new Channels();
         channel.name = name;
-        channel.workspaceId = workspace.id;
+        channel.workspaceid = workspace!.id;
         const channelReturned = await this.channelsRepository.save(channel);
         const channelMember = new Channelmembers();
         channelMember.userid = myId;
@@ -143,15 +145,15 @@ export class ChannelsService {
           .getOne();
         const chats = new ChannelChats();
         chats.content = content;
-        chats.userId = myId;
-        chats.channelId = channel.id;
+        chats.userid = myId;
+        chats.channelid = channel!.id;
         const savedChat = await this.channelChatsRepository.save(chats);
         const chatWithUser = await this.channelChatsRepository.findOne({
           where: { id: savedChat.id },
           relations: ['user', 'channel'],
         });
         this.eventsGateway.server
-          .to(`/ws-${url}-${chatWithUser.channelId}`)
+          .to(`/ws-${url}-${chatWithUser!.channelid}`)
           .emit('message', chatWithUser);
     }
 
@@ -161,7 +163,7 @@ export class ChannelsService {
         files: Express.Multer.File[],
         myId: number,
         ){
-        console.log(files);
+        // console.log(files);
         const channel = await this.channelsRepository
           .createQueryBuilder('channel')
           .innerJoin('channel.workspace', 'workspace', 'workspace.url = :url', {
@@ -172,8 +174,8 @@ export class ChannelsService {
         for (let i = 0; i < files.length; i++) {
           const chats = new ChannelChats();
           chats.content = files[i].path;
-          chats.userId = myId;
-          chats.channelId = channel.id;
+          chats.userid = myId;
+          chats.channelid = channel!.id;
           const savedChat = await this.channelChatsRepository.save(chats);
           const chatWithUser = await this.channelChatsRepository.findOne({
             where: { id: savedChat.id },
@@ -181,7 +183,7 @@ export class ChannelsService {
           });
           this.eventsGateway.server
             // .of(`/ws-${url}`)
-            .to(`/ws-${url}-${chatWithUser.channelId}`)
+            .to(`/ws-${url}-${chatWithUser!.channelid}`)
             .emit('message', chatWithUser);
         }
     }
@@ -196,7 +198,7 @@ export class ChannelsService {
           .getOne();
         return this.channelChatsRepository.count({
           where: {
-            channelId: channel.id,
+            channelid: channel!.id,
             createdAt: MoreThan(new Date(after)),
           },
         });

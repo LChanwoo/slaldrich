@@ -63,17 +63,17 @@ export class DmsService {
         dm.senderId = myId;
         dm.receiverId = id;
         dm.content = content;
-        dm.workspaceId = workspace.id;
+        dm.workspaceid = workspace!.id;
         const savedDm = await this.dmsRepository.save(dm);
         const dmWithSender = await this.dmsRepository.findOne({
             where: { id: savedDm.id },
             relations: ['sender'],
         });
         const receiverSocketId = getKeyByValue(
-            onlineMap[`/ws-${workspace.url}`],
+            onlineMap[`/ws-${workspace!.url}`],
             Number(id),
         );
-        this.eventsGateway.server.to(receiverSocketId).emit('dm', dmWithSender);
+        this.eventsGateway.server.to(receiverSocketId!).emit('dm', dmWithSender);
     }
     async createWorkspaceDMImages(
         url: string,
@@ -89,17 +89,17 @@ export class DmsService {
             dm.senderId = myId;
             dm.receiverId = id;
             dm.content = files[i].path;
-            dm.workspaceId = workspace.id;
+            dm.workspaceid = workspace!.id;
             const savedDm = await this.dmsRepository.save(dm);
             const dmWithSender = await this.dmsRepository.findOne({
             where: { id: savedDm.id },
             relations: ['sender'],
         });
             const receiverSocketId = getKeyByValue(
-                onlineMap[`/ws-${workspace.url}`],
+                onlineMap[`/ws-${workspace!.url}`],
                 Number(id),
             );
-            this.eventsGateway.server.to(receiverSocketId).emit('dm', dmWithSender);
+            this.eventsGateway.server.to(receiverSocketId!).emit('dm', dmWithSender);
         }
     }
     async getDMUnreadsCount(url, id, myId, after) {
@@ -108,7 +108,7 @@ export class DmsService {
         });
         return this.dmsRepository.count({
             where: {
-                workspaceId: workspace.id,
+                workspaceid: workspace!.id,
                 senderId: id,
                 receiverId: myId,
                 createdAt: MoreThan(new Date(after)),

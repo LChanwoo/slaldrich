@@ -10,17 +10,18 @@ export class LocalSerializer extends PassportSerializer {
   constructor(
     private readonly authService: AuthService,
     @InjectRepository(Users) private usersRepository: Repository<Users>,
+    @InjectRepository(Users) private Repository: Repository<Users>,
   ) {
     super();
   }
 
   serializeUser(user: Users, done: CallableFunction) {
-    console.log(user);
+    // console.log(user);
     done(null, user);
   }
 
   async deserializeUser(userId: Users, done: CallableFunction) {
-    console.log("userId", userId)
+    // console.log("userId", userId)
     return await this.usersRepository
       .findOneOrFail({
         where: { id: userId.id },
@@ -28,7 +29,7 @@ export class LocalSerializer extends PassportSerializer {
         relations: ['workspaces'],
       })
       .then((user) => {
-        console.log('user', user);
+        // console.log('user', user);
         done(null, user);
       })
       .catch((error) => done(error));

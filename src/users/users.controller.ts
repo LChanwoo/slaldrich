@@ -13,13 +13,13 @@ export class UsersController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@User() user: Users) {
-        console.log(user)
+        // console.log(user)
         return user;
     }
     @UseGuards(NotLoggedInGuard)
     @Post()
     async join(@Body() data: JoinRequestDto) {
-        console.log(data)
+        // console.log(data)
       const user = this.usersService.findByEmail(data.email);
       if (!user) {
         throw new NotFoundException();
@@ -40,10 +40,14 @@ export class UsersController {
     async test() {
         return this.usersService.test();
     }
+    @Get()
+    async users(@User() user: Users) {
+      // console.log(user)
+        return user;
+    }
     @Get('test2')
     async test2(@User() user: Users) {
-        console.log(user)
-        return {user} 
+      return this.usersService.test2();
     }
 
 

@@ -10,10 +10,10 @@ export class Mentions extends BaseEntity {
     type: 'chat'|'dm'|'system';
 
     @Column()
-    chatId: number;
+    chatid: number;
 
     @Column()
-    workspaceId: number;
+    workspaceid: number;
 
     @Column()
     senderId: number;

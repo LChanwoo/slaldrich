@@ -13,8 +13,8 @@ import {
   
   @Entity('workspacemembers', { schema: 'public' })
   export class Workspacemembers {
-    @PrimaryGeneratedColumn()
-    id: number;
+    // @PrimaryGeneratedColumn()
+    // id: number;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -22,16 +22,16 @@ import {
     @UpdateDateColumn()
     updatedAt: Date;
   
-    @Column('int')
+    @Column('int', { primary: true, name: 'workspaceid' })
     workspaceid: number;
   
-    @Column('int')
+    @Column('int', { primary: true, name: 'userid' })
     userid: number;
   
     @Column('date', { name: 'loggedInAt', nullable: true })
     loggedInAt: Date | null;
   
-    @ManyToOne(() => Workspaces, (workspaces) => workspaces.workspaceMembers, {
+    @ManyToOne(() => Workspaces, (workspaces) => workspaces.workspacemembers, {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     })

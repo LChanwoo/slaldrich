@@ -71,20 +71,21 @@ export class UsersService {
     async test() {
         try{
         const newuser = new Users();
-        newuser.email = 'test@test.com';
+        newuser.id = 1;
+        newuser.email = 'test1@test.com';
         newuser.nickname = 'test';
         newuser.password = 'test';
         await this.usersRepository.save(newuser);
 
         const newworkspace = new Workspaces();
-        newworkspace.name = 'test';
-        newworkspace.url = 'test';
-        newworkspace.ownerId = 1;
+        newworkspace.name = 'sleact';
+        newworkspace.url = 'sleact';
+        newworkspace.ownerid = 1;
         await this.workspacesRepository.save(newworkspace);
         
         const newchannel = new Channels();
-        newchannel.name = 'test';
-        newchannel.workspaceId = 1;
+        newchannel.name = '일반';
+        newchannel.workspaceid = 1;
         newchannel.private = false;
         
         const newchannelmember = new Channelmembers();
@@ -119,5 +120,21 @@ export class UsersService {
 
 
         // return this.usersRepository.find();
+    }
+    async test2() {
+      const allusers = await this.usersRepository.find();
+      // return allusers;
+      const allworkspaces = await this.workspacesRepository.find();
+      // return allworkspaces;
+      const allchannels = await this.channelsRepository.find();
+      // return allchannels;
+      const allchannelmembers = await this.channelMembersRepository.find();
+      // return allchannelmembers;
+      return {
+          allusers,
+          allworkspaces,
+          allchannels,
+          allchannelmembers,
+      }
     }
 }

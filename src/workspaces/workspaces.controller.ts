@@ -43,5 +43,12 @@ export class WorkspacesController {
     ) {
       return this.workspacesService.getWorkspaceMember(url, id);
     }
+    @Get(':url/users/:id')
+    async getWorkspaceMember2(
+      @Param('url') url: string,
+      @Param('id', ParseIntPipe) id: number,
+    ) {
+      return this.workspacesService.getWorkspaceMember(url, id);
+    }
 
 }

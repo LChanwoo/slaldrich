@@ -37,7 +37,7 @@ export class WorkspacesService {
         const workspace = new Workspaces();
         workspace.name = name;
         workspace.url = url;
-        workspace.ownerId = myId;
+        workspace.ownerid = myId;
         const returned = await this.workspacesRepository.save(workspace);
         const workspaceMember = new Workspacemembers();
         workspaceMember.userid = myId;
@@ -45,7 +45,7 @@ export class WorkspacesService {
         await this.workspaceMembersRepository.save(workspaceMember);
         const channel = new Channels();
         channel.name = '일반';
-        channel.workspaceId = returned.id;
+        channel.workspaceid = returned.id;
         channel.private = false;
         const channelReturned = await this.channelsRepository.save(channel);
         const channelMember = new Channelmembers();
@@ -81,7 +81,7 @@ export class WorkspacesService {
       return null;
     }
     const workspaceMember = new Workspacemembers();
-    workspaceMember.workspaceid = workspace.id;
+    workspaceMember.workspaceid = workspace!.id;
     workspaceMember.userid = user.id;
     await this.workspaceMembersRepository.save(workspaceMember);
     const channelMember = new Channelmembers();

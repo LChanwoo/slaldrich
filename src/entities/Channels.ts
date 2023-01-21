@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ChannelChats } from "./ChannelChats";
 import { Channelmembers } from "./ChannelMembers";
 import Users from "./Users";
@@ -22,15 +22,15 @@ export class Channels extends BaseEntity {
     updatedAt: Date;
 
     @Column()
-    workspaceId: number;
+    workspaceid: number;
 
     @OneToMany(()=>ChannelChats, channelChat=>channelChat.channel)
-    channelChats: ChannelChats[];
+    channelchats: ChannelChats[];
 
     @OneToMany(()=>Channelmembers, channelMember=>channelMember.channel,{
         cascade:['insert']
     })
-    channelMembers: Channelmembers[];
+    channelmembers: Channelmembers[];
 
 
     @ManyToMany(() => Users, (users) => users.channels)
@@ -40,5 +40,6 @@ export class Channels extends BaseEntity {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
+    @JoinColumn([{ name: 'workspaceid', referencedColumnName: 'id' }])
     workspace: Workspaces;
 }

@@ -1,50 +1,71 @@
-import InputGroup from '../../components/InputGroup'
-import { useState } from 'react'
-import Link from 'next/link'
-import GoogleButton from '../../components/GoogleButton'
-import { NextPage } from 'next'
+import useInput from '../../hooks/useInput';
+import { Button, Error, Form, Header, Input, Label, LinkContainer } from './SignUp/styles';
+import fetcher from '../../utils/fetcher';
+import axios from 'axios';
+import React, { useCallback, useState } from 'react';
+import useSWR from 'swr';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+const LogIn = () => {
+  const router = useRouter();
+  const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
+  const [logInError, setLogInError] = useState(false);
+  const [email, onChangeEmail] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setLogInError(false);
+      axios
+        .post(
+          '/api/users/login',
+          { email, password },
+          {
+            withCredentials: true,
+          },
+        )
+        .then(() => {
+          mutate();
+        })
+        .catch((error) => {
+          setLogInError(error.response?.data?.code === 401);
+        });
+    },
+    [email, password, mutate],
+  );
 
+  console.log(error, userData);
+  if (!error && userData) {
+    console.log('로그인됨', userData);
+    router.push('/workspace/sleact/channel/일반');
+    // return window.location.href = '/workspaces/sleact/channels/일반';
+  }
 
-const Login : NextPage = ()=> {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<any>({});
   return (
-    <div className=''>
-      <div className='flex flex-col justify-center items-center font-bold h-screen '>
-        <div className="w-10/12 mx-auto md:w-96">
-          <h1 className="mb-2 text-lg font-medium">로그인</h1>
-          <form>
-            <InputGroup
-              placeholder="email"
-              value={username}
-              setValue={setUsername}
-              error={errors.username}
-            ></InputGroup>
-            <InputGroup
-                placeholder="Password"
-                value={password}
-                setValue={setPassword}
-                error={errors.password}
-            ></InputGroup>
-            <button className="w-full py-2 mb-1 text-sm font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
-                로그인
-            </button>
-          </form>
-          <GoogleButton/><br></br>
-          <small>
-              아직 아이디가 없나요
-              <Link href="/register" >
-                <a className="ml-1 text-blue-500 uppercase">
-                  회원가입
-                </a>
-              </Link>
-          </small>
-          
-        </div>
-      </div>
+    <div id="container">
+      <Header>Slaldrich</Header>
+      <Form onSubmit={onSubmit}>
+        <Label id="email-label">
+          <span>이메일 주소</span>
+          <div>
+            <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} />
+          </div>
+        </Label>
+        <Label id="password-label">
+          <span>비밀번호</span>
+          <div>
+            <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} />
+          </div>
+          {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
+        </Label>
+        <Button type="submit">로그인</Button>
+      </Form>
+      <LinkContainer>
+        아직 회원이 아니신가요?&nbsp;
+        <a href="/signup">회원가입 하러가기</a>
+      </LinkContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Login;
+export default LogIn;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { MentionsInput } from 'react-mentions';
 
 export const ChatArea = styled.div`
@@ -63,7 +63,7 @@ export const SendButton = styled.button`
   top: 5px;
 `;
 
-export const EachMention = styled.button`
+export const EachMention = styled.button<{ focus: boolean }>`
   padding: 4px 20px;
   background: transparent;
   border: none;

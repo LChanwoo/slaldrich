@@ -16,10 +16,14 @@ async function bootstrap() {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     },
   }));
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   // app.useGlobalFilters(new HttpExceptionFilter());
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(4500);
+  await app.listen(3095);
 }
 
 bootstrap();

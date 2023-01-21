@@ -17,7 +17,7 @@ export class Dms extends BaseEntity {
     updatedAt: Date;
 
     @Column()
-    workspaceId: number;
+    workspaceid: number;
 
     @Column()
     senderId: number;

@@ -2,7 +2,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, Pr
 import { Channels } from "./Channels";
 import Users from "./Users";
 
-@Entity('channelMembers', { schema: 'public' } )
+@Entity('channelmembers', { schema: 'public' } )
 export class Channelmembers extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -19,14 +19,14 @@ export class Channelmembers extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(()=>Channels, channel=>channel.channelMembers,{
+    @ManyToOne(()=>Channels, channel=>channel.channelmembers,{
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
     })
     @JoinColumn({name: 'channelid', referencedColumnName: 'id'})
     channel: Channels;
 
-    @ManyToOne(()=>Users, user=>user.channelMembers,{
+    @ManyToOne(()=>Users, user=>user.channelmembers,{
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
     })
