@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, UseFilters } from '@nestjs/common';
 import { RenderModule } from 'nest-next';
 import Next from 'next';
 import { AppController } from './app.controller';
@@ -19,7 +19,9 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
 import { ChannelsModule } from './channels/channels.module';
 import { EventsModule } from './events/events.module';
 import { DmsModule } from './dms/dms.module';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
+@UseFilters(new HttpExceptionFilter())
 @Module({
   imports: [
     RenderModule.forRootAsync(

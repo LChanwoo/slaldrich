@@ -16,7 +16,7 @@ async function bootstrap() {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     },
   }));
-  app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalFilters(new HttpExceptionFilter());
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(4500);

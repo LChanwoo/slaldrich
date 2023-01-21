@@ -13,7 +13,7 @@ const Login : NextPage = ()=> {
     <div className=''>
       <div className='flex flex-col justify-center items-center font-bold h-screen '>
         <div className="w-10/12 mx-auto md:w-96">
-          <h1 className="mb-2 text-lg font-medium">회원가입</h1>
+          <h1 className="mb-2 text-lg font-medium">로그인</h1>
           <form>
             <InputGroup
               placeholder="email"

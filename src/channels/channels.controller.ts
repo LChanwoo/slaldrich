@@ -17,7 +17,7 @@ try {
   }
   
 @UseGuards(LoggedInGuard)
-@Controller('channels')
+@Controller('api/channels')
 export class ChannelsController {
     constructor(private channelsService: ChannelsService) {}
 

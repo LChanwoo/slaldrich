@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Render } from '@nestjs/common';
+import { Controller, Get, Param, Query, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -22,6 +22,16 @@ export class AppController {
   @Get('/register')
   public register() {
     return {};
+  }
+  @Render('channel')
+  @Get('/workspaces/:workspace/channels/:channel')
+  public channel(@Param('workspace') workspace: string, @Param('channel') channel: string) {
+    return {workspace, channel};
+  }
+  @Render('channel')
+  @Get('channel')
+  public channel2(@Param('workspace') workspace: string, @Param('channel') channel: string) {
+    return {workspace, channel};
   }
 }
 

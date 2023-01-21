@@ -7,7 +7,6 @@ import '../styles/global.css';
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
-    asds
     <NavBar/>
     <div className='flex w-screen'>
       <WokrspaceBar/>
