@@ -1,13 +1,13 @@
-import useInput from '../../hooks/useInput';
-import { Button, Error, Form, Header, Input, Label, LinkContainer, Success } from './SignUp/styles';
-import fetcher from '../../utils/fetcher';
+import useInput from '../../../hooks/useInput';
+import { Button, Error, Form, Header, Input, Label, LinkContainer, Success } from './styles';
+import fetcher from '../../../utils/fetcher';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
-const SignUp = () => {
+const Signup = () => {
   const router = useRouter();
   const { data: userData } = useSWR('/api/users', fetcher);
   const [signUpError, setSignUpError] = useState(false);
@@ -56,11 +56,12 @@ const SignUp = () => {
     },
     [email, nickname, password, mismatchError],
   );
-
+  console.log("여기 옴??")
   if (userData) {
-    return router.push('/workspace/test')
+    return router.push('/workspace/sleact/channel/일반')
     // return <Redirect to="/workspace/test" />;
   }
+  console.log("여기 옴??")
 
   return (
     <div id="container">
@@ -110,4 +111,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;

@@ -33,7 +33,7 @@ const ChatList: FC<Props> = ({ scrollbarRef, isReachingEnd, isEmpty, chatSection
               <StickyHeader>
                 <button>{date}</button>
               </StickyHeader>
-              {chats.map((chat) => (
+              {chats?.map((chat) => (
                 <Chat key={chat.id} data={chat} />
               ))}
             </Section>

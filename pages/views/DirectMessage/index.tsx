@@ -21,7 +21,7 @@ const PAGE_SIZE = 20;
 const DirectMessage = () => {
   // const { workspace, id } = useParams<{ workspace: string; id: string }>();
   const router = useRouter();
-  const [,, workspace, ,channel] = router.asPath.split('/');
+  const [,, workspace, ,id] = router.asPath.split('/');
   const [socket] = useSocket(workspace);
   const { data: myData } = useSWR('/api/users', fetcher);
   const { data: userData } = useSWR(`/api/workspaces/${workspace}/users/${id}`, fetcher);

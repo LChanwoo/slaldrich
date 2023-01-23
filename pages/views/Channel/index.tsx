@@ -3,7 +3,7 @@ import ChatList from '../../../components/ChatList';
 import InviteChannelModal from '../../../components/InviteChannelModal';
 import useInput from '../../../hooks/useInput';
 import useSocket from '../../../hooks/useSocket';
-import { Header, Container, DragOver } from '../Channel/styles';
+import { Header, Container, DragOver, Headerss } from '../Channel/styles';
 import { IChannel, IChat, IUser } from '../../../typings/db';
 import fetcher from '../../../utils/fetcher';
 import makeSection from '../../../utils/makeSection';
@@ -16,13 +16,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { useRouter } from 'next/router';
-
+import urldecode from 'urldecode';
 const PAGE_SIZE = 20;
 const Channel = () => {
   const router = useRouter();
-  const [,, workspace, ,channel] = router.asPath.split('/');
-  console.log(workspace, channel);
-  // const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
+  let [,, workspaces, ,channels] = router.asPath.split('/');
+  const [workspace, setWorkspace] = useState(urldecode(workspaces));
+  const [channel, setChannel] = useState(urldecode(channels));
   const [socket] = useSocket(workspace);
   const { data: userData } = useSWR<IUser>('/api/users', fetcher);
   const { data: channelsData } = useSWR<IChannel[]>(`/api/workspaces/${workspace}/channels`, fetcher);
@@ -97,8 +97,8 @@ const Channel = () => {
   const onMessage = useCallback(
     (data: IChat) => {
       if (
-        data.Channel.name === channel &&
-        (data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') || data.UserId !== userData?.id)
+        data.channel.name === channel &&
+        (data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') || data.userid !== userData?.id)
       ) {
         mutateChat((chatData) => {
           chatData?.[0].unshift(data);

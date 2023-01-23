@@ -28,6 +28,7 @@ export class ChannelsService {
     }
       
     async getWorkspaceChannels(url: string, myId: number) {
+      try{
         console.log("ASDASDASDASDASDASDASDASDASDASD")
         console.log(url)
         return this.channelsRepository
@@ -45,6 +46,9 @@ export class ChannelsService {
             { url },
         )
         .getMany();
+      }catch(e){
+        console.error(e)
+      }
     }
 
     async getWorkspaceChannel(url: string, name: string) {
@@ -58,17 +62,23 @@ export class ChannelsService {
     }
 
     async createWorkspaceChannels(url: string, name: string, myId: number) {
+      try{
         const workspace = await this.workspacesRepository.findOne({
         where: { url },
         });
         const channel = new Channels();
         channel.name = name;
         channel.workspaceid = workspace!.id;
+        channel.private = false;
         const channelReturned = await this.channelsRepository.save(channel);
         const channelMember = new Channelmembers();
         channelMember.userid = myId;
         channelMember.channelid = channelReturned.id;
         await this.channelMembersRepository.save(channelMember);
+
+      }catch(e){
+        console.error(e)
+      }
     }
 
     async getWorkspaceChannelMembers(url: string, name: string) {
@@ -83,6 +93,7 @@ export class ChannelsService {
           .getMany();
       }
     async createWorkspaceChannelMembers(url, name, email) {
+      try{
         const channel = await this.channelsRepository
             .createQueryBuilder('channel')
             .innerJoin('channel.workspace', 'workspace', 'workspace.url = :url', {
@@ -107,6 +118,10 @@ export class ChannelsService {
         channelMember.channelid = channel.id;
         channelMember.userid = user.id;
         await this.channelMembersRepository.save(channelMember);
+
+      }catch(e){
+        console.error(e)
+      }
     }
 
     async getWorkspaceChannelChats(
@@ -115,19 +130,21 @@ export class ChannelsService {
         perPage: number,
         page: number,
       ) {
-        return this.channelChatsRepository
-          .createQueryBuilder('channelChats')
-          .innerJoin('channelChats.channel', 'channel', 'channel.name = :name', {
+        const result = await this.channelChatsRepository
+          .createQueryBuilder('channelchats')
+          .innerJoin('channelchats.channel', 'channel', 'channel.name = :name', {
             name,
           })
           .innerJoin('channel.workspace', 'workspace', 'workspace.url = :url', {
             url,
           })
-          .innerJoinAndSelect('channelChats.user', 'user')
-          .orderBy('channelChats.createdAt', 'DESC')
+          .innerJoinAndSelect('channelchats.user', 'user')
+          .orderBy('channelchats.createdAt', 'DESC')
           .take(perPage)
           .skip(perPage * (page - 1))
           .getMany();
+          // console.log(result);
+        return result;
     }
 
     async createWorkspaceChannelChats(

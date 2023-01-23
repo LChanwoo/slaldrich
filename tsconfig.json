@@ -44,7 +44,7 @@
     "./src/**/*",
     "./ui/**/*",
     "types.ts"
-  ],
+, "bk/_app.tsx"  ],
   "exclude": [
     "node_modules"
   ]

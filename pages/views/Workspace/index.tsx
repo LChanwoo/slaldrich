@@ -8,7 +8,7 @@ import useInput from '../../../hooks/useInput';
 import useSocket from '../../../hooks/useSocket';
 import Channel from '../../../pages/views/Channel';
 import DirectMessage from '../../../pages/views/DirectMessage';
-import { Button, Input, Label } from '../../../pages/views/SignUp/styles';
+import { Button, Input, Label } from '../Signup/styles';
 import { IChannel, IUser } from '../../../typings/db';
 import fetcher from '../../../utils/fetcher';
 import axios from 'axios';
@@ -47,12 +47,12 @@ const Workspace = () => {
   const router = useRouter();
   // const href = useHref.asPath;
   // console.log(href)
-  const [,,workspace] = router.asPath.split('/');
+  const [,,workspace,type,channel] = router.asPath.split('/');
   console.log(workspace)
   // console.log('params', params, 'location', location, 'routeMatch', routeMatch, 'history', history);
   // const { workspace } = params;
   const [socket, disconnectSocket] = useSocket(workspace);
-  const { data: userData, mutate: revalidateUser } = useSWR<IUser | false>('/api/users', fetcher);
+  const { data: userData, mutate: revalidateUser } = useSWR<IUser>('/api/users', fetcher);
   const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher);
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false);
   const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false);
@@ -198,10 +198,7 @@ const Workspace = () => {
           </MenuScroll>
         </Channels>
         <Chats>
-          {/* <Switch>
-            <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
-            <Route path="/workspace/:workspace/dm/:id" component={DirectMessage} />
-          </Switch> */} 
+          { type ==="channel"?<Channel/>:<DirectMessage/>}
         </Chats>
       </WorkspaceWrapper>
       <Modal show={showCreateWorkspaceModal} onCloseModal={onCloseModal}>

@@ -1,6 +1,6 @@
-import useInput from '../../hooks/useInput';
-import { Button, Error, Form, Header, Input, Label, LinkContainer } from './SignUp/styles';
-import fetcher from '../../utils/fetcher';
+import useInput from '../../../hooks/useInput';
+import { Button, Error, Form, Header, Input, Label, LinkContainer } from './styles';
+import fetcher from '../../../utils/fetcher';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import useSWR from 'swr';
@@ -37,7 +37,8 @@ const LogIn = () => {
   console.log(error, userData);
   if (!error && userData) {
     console.log('로그인됨', userData);
-    router.push('/workspace/sleact/channel/일반');
+    // return <Link href="/workspace/sleact/channel/일반">go to workspace</Link>;
+    return router.push('/workspace/sleact/channel/일반');
     // return window.location.href = '/workspaces/sleact/channels/일반';
   }
 
@@ -61,8 +62,10 @@ const LogIn = () => {
         <Button type="submit">로그인</Button>
       </Form>
       <LinkContainer>
-        아직 회원이 아니신가요?&nbsp;
+        <>
+              아직 회원이 아니신가요?&nbsp;
         <a href="/signup">회원가입 하러가기</a>
+        </>
       </LinkContainer>
     </div>
   );

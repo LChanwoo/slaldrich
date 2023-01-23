@@ -18,7 +18,6 @@ const Chat: FC<Props> = memo(({ data }) => {
   const router = useRouter();
   const [,,workspace] = router.asPath.split('/');
   const user: IUser = 'sender' in data ? data.sender : data.user;
-
   const result = useMemo<(string | JSX.Element)[] | JSX.Element>(
     () =>
       data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') ? (

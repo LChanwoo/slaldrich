@@ -8,7 +8,7 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const Header = styled.header`
+export const Header = styled.div`
   height: 64px;
   display: flex;
   width: 100%;

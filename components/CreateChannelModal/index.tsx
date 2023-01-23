@@ -1,6 +1,6 @@
 import Modal from '../Modal';
 import useInput from '../../hooks/useInput';
-import { Button, Input, Label } from '../../pages/views/SignUp/styles';
+import { Button, Input, Label } from '../../pages/views/Signup/styles';
 import { IChannel, IUser } from '../../typings/db';
 import fetcher from '../../utils/fetcher';
 import axios from 'axios';

@@ -4,7 +4,7 @@ export const RightMenu = styled.div`
   float: right;
 `;
 
-export const Header = styled.header`
+export const Header = styled.div`
   height: 38px;
   background: #350d36;
   color: #ffffff;

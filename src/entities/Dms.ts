@@ -36,14 +36,14 @@ export class Dms extends BaseEntity {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'ReceiverId', referencedColumnName: 'id'})
+    @JoinColumn({name: 'receiverId', referencedColumnName: 'id'})
     receiver: Users;
 
     @ManyToOne(()=>Workspaces, workspace=>workspace.dms,{
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
     })
-    @JoinColumn({name: 'workspaceId', referencedColumnName: 'id'})
+    @JoinColumn({name: 'workspaceid', referencedColumnName: 'id'})
     workspace: Workspaces;
 
 }

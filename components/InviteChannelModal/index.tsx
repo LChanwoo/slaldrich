@@ -1,6 +1,6 @@
 import Modal from '../Modal';
 import useInput from '../../hooks/useInput';
-import { Button, Input, Label } from '../../pages/views/SignUp/styles';
+import { Button, Input, Label } from '../../pages/views/Signup/styles';
 import { IUser } from '../../typings/db';
 import fetcher from '../../utils/fetcher';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-
+import { urldecode } from 'urldecode';
 interface Props {
   show: boolean;
   onCloseModal: () => void;
@@ -18,7 +18,8 @@ interface Props {
 const InviteChannelModal: FC<Props> = ({ show, onCloseModal, setShowInviteChannelModal }) => {
   // const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
   const router = useRouter();
-  const [,,workspace] = router.asPath.split('/');
+  let [,,workspace,,channel] = router.asPath.split('/');
+  // channel = urldecode(channel);
   const [newMember, onChangeNewMember, setNewMember] = useInput('');
   const { data: userData } = useSWR<IUser>('/api/users', fetcher);
   const { mutate: revalidateMembers } = useSWR<IUser[]>(
@@ -43,6 +44,7 @@ const InviteChannelModal: FC<Props> = ({ show, onCloseModal, setShowInviteChanne
         })
         .catch((error) => {
           console.dir(error);
+          console.log(error);
           toast.error(error.response?.data, { position: 'bottom-center' });
         });
     },

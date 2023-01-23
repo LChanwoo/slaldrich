@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-export const Header = styled.header`
+export const Header = styled.div`
   text-align: center;
   font-family: Slack-Larsseit, Helvetica Neue, Helvetica, Segoe UI, Tahoma, Arial, sans-serif;
   font-weight: 700;
