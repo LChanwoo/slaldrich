@@ -3,7 +3,7 @@ import ChatList from '../../../components/ChatList';
 import InviteChannelModal from '../../../components/InviteChannelModal';
 import useInput from '../../../hooks/useInput';
 import useSocket from '../../../hooks/useSocket';
-import { Header, Container, DragOver, Headerss } from '../Channel/styles';
+import { Header, Container, DragOver} from '../Channel/styles';
 import { IChannel, IChat, IUser } from '../../../typings/db';
 import fetcher from '../../../utils/fetcher';
 import makeSection from '../../../utils/makeSection';
@@ -18,11 +18,13 @@ import useSWRInfinite from 'swr/infinite';
 import { useRouter } from 'next/router';
 import urldecode from 'urldecode';
 const PAGE_SIZE = 20;
+
 const Channel = () => {
   const router = useRouter();
   let [,, workspaces, ,channels] = router.asPath.split('/');
   const [workspace, setWorkspace] = useState(urldecode(workspaces));
   const [channel, setChannel] = useState(urldecode(channels));
+  console.log(workspace, channel)
   const [socket] = useSocket(workspace);
   const { data: userData } = useSWR<IUser>('/api/users', fetcher);
   const { data: channelsData } = useSWR<IChannel[]>(`/api/workspaces/${workspace}/channels`, fetcher);
@@ -169,6 +171,7 @@ const Channel = () => {
       axios.post(`/api/workspaces/${workspace}/channels/${channel}/images`, formData).then(() => {
         setDragOver(false);
         localStorage.setItem(`${workspace}-${channel}`, new Date().getTime().toString());
+        mutateChat();
       });
     },
     [workspace, channel],
@@ -181,7 +184,8 @@ const Channel = () => {
   }, []);
 
   if (channelsData && !channelData) {
-    return router.push(`/workspace/${workspace}/channel/일반`)
+    return null
+    // return router.push(`/workspace/${workspace}/channel/일반`)
     // return <Redirect to={`/workspace/${workspace}/channel/일반`} />;
   }
 
@@ -190,7 +194,7 @@ const Channel = () => {
   return (
     <Container onDrop={onDrop} onDragOver={onDragOver}>
       <Header>
-        <span>#{channel}</span>
+        <span>#</span>
         <div style={{ display: 'flex', flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
           <span>{channelMembersData?.length}</span>
           <button
@@ -226,6 +230,7 @@ const Channel = () => {
       <ToastContainer position="bottom-center" />
       {dragOver && <DragOver>업로드!</DragOver>}
     </Container>
+    // <div></div>
   );
 };
 

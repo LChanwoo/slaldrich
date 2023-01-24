@@ -6,8 +6,8 @@ import Menu from '../../../components/Menu';
 import Modal from '../../../components/Modal';
 import useInput from '../../../hooks/useInput';
 import useSocket from '../../../hooks/useSocket';
-import Channel from '../../../pages/views/Channel';
-import DirectMessage from '../../../pages/views/DirectMessage';
+import Channel from '../Channel';
+import DirectMessage from '../DirectMessage';
 import { Button, Input, Label } from '../Signup/styles';
 import { IChannel, IUser } from '../../../typings/db';
 import fetcher from '../../../utils/fetcher';
@@ -198,7 +198,7 @@ const Workspace = () => {
           </MenuScroll>
         </Channels>
         <Chats>
-          <Channel/>
+          <DirectMessage/>
         </Chats>
       </WorkspaceWrapper>
       <Modal show={showCreateWorkspaceModal} onCloseModal={onCloseModal}>

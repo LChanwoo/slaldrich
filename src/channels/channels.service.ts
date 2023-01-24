@@ -153,25 +153,32 @@ export class ChannelsService {
         content: string,
         myId: number,
     ) {
-        const channel = await this.channelsRepository
-          .createQueryBuilder('channel')
-          .innerJoin('channel.workspace', 'workspace', 'workspace.url = :url', {
-            url,
-          })
-          .where('channel.name = :name', { name })
-          .getOne();
-        const chats = new ChannelChats();
-        chats.content = content;
-        chats.userid = myId;
-        chats.channelid = channel!.id;
-        const savedChat = await this.channelChatsRepository.save(chats);
-        const chatWithUser = await this.channelChatsRepository.findOne({
-          where: { id: savedChat.id },
-          relations: ['user', 'channel'],
-        });
-        this.eventsGateway.server
-          .to(`/ws-${url}-${chatWithUser!.channelid}`)
-          .emit('message', chatWithUser);
+        try{
+          const channel = await this.channelsRepository
+            .createQueryBuilder('channel')
+            .innerJoin('channel.workspace', 'workspace', 'workspace.url = :url', {
+              url,
+            })
+            .where('channel.name = :name', { name })
+            .getOne();
+          const chats = new ChannelChats();
+          chats.content = content;
+          chats.userid = myId;
+          chats.channelid = channel!.id;
+          const savedChat = await this.channelChatsRepository.save(chats);
+          const chatWithUser = await this.channelChatsRepository.findOne({
+            where: { id: savedChat.id },
+            relations: ['user', 'channel'],
+          });
+          // console.log(savedChat)
+          // console.log(chatWithUser);
+          this.eventsGateway.server
+            .to(`/ws-${url}-${chatWithUser!.channelid}`)
+            .emit('message', chatWithUser);
+        }catch(e){
+          console.log("이 밑으로 에러")
+          console.error(e)
+        }
     }
 
     async createWorkspaceChannelImages(

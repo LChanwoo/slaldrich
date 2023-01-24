@@ -56,24 +56,30 @@ export class DmsService {
         id: number,
         myId: number,
         ) {
-        const workspace = await this.workspacesRepository.findOne({
-            where: { url },
-        });
-        const dm = new Dms();
-        dm.senderId = myId;
-        dm.receiverId = id;
-        dm.content = content;
-        dm.workspaceid = workspace!.id;
-        const savedDm = await this.dmsRepository.save(dm);
-        const dmWithSender = await this.dmsRepository.findOne({
-            where: { id: savedDm.id },
-            relations: ['sender'],
-        });
-        const receiverSocketId = getKeyByValue(
-            onlineMap[`/ws-${workspace!.url}`],
-            Number(id),
-        );
-        this.eventsGateway.server.to(receiverSocketId!).emit('dm', dmWithSender);
+            try{
+                const workspace = await this.workspacesRepository.findOne({
+                    where: { url },
+                });
+                const dm = new Dms();
+                dm.senderId = myId;
+                dm.receiverId = id;
+                dm.content = content;
+                dm.workspaceid = workspace!.id;
+                const savedDm = await this.dmsRepository.save(dm);
+                const dmWithSender = await this.dmsRepository.findOne({
+                    where: { id: savedDm.id },
+                    relations: ['sender'],
+                });
+                const receiverSocketId = getKeyByValue(
+                    onlineMap[`/ws-${workspace!.url}`],
+                    Number(id),
+                );
+                // console.log(dmWithSender)
+                this.eventsGateway.server.to(receiverSocketId!).emit('dm', dmWithSender);
+            }  catch (error) {
+                console.log("이 밑으로 에러")
+                console.error(error);
+            }
     }
     async createWorkspaceDMImages(
         url: string,

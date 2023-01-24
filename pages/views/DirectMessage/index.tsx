@@ -85,7 +85,7 @@ const DirectMessage = () => {
 
   const onMessage = useCallback(
     (data: IDM) => {
-      if (data.SenderId === Number(id) && myData.id !== Number(id)) {
+      if (data.senderId === Number(id) && myData.id !== Number(id)) {
         mutateChat((chatData) => {
           chatData?.[0].unshift(data);
           return chatData;
