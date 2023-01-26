@@ -74,8 +74,9 @@ export class DmsService {
                     onlineMap[`/ws-${workspace!.url}`],
                     Number(id),
                 );
-                // console.log(dmWithSender)
-                this.eventsGateway.server.to(receiverSocketId!).emit('dm', dmWithSender);
+                console.log("dmwithSender = ",dmWithSender)
+                console.log("receiverSocketId = ",receiverSocketId)    
+                this.eventsGateway.server.to(receiverSocketId).emit('dm', dmWithSender);
             }  catch (error) {
                 console.log("이 밑으로 에러")
                 console.error(error);

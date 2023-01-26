@@ -3,7 +3,7 @@ import ChatList from '../../../components/ChatList';
 import InviteChannelModal from '../../../components/InviteChannelModal';
 import useInput from '../../../hooks/useInput';
 import useSocket from '../../../hooks/useSocket';
-import { Header, Container, DragOver} from '../Channel/styles';
+import { Header, Container, DragOver} from './styles';
 import { IChannel, IChat, IUser } from '../../../typings/db';
 import fetcher from '../../../utils/fetcher';
 import makeSection from '../../../utils/makeSection';
@@ -17,16 +17,12 @@ import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import { useRouter } from 'next/router';
 import urldecode from 'urldecode';
+import { NextPage, NextPageContext } from 'next';
 const PAGE_SIZE = 20;
 
-const Channel = () => {
-  const router = useRouter();
-  let [,, workspaces, ,channels] = router.asPath.split('/');
-  const [workspace, setWorkspace] = useState(urldecode(workspaces));
-  const [channel, setChannel] = useState(urldecode(channels));
-  console.log(workspace, channel)
+export default function Channel({workspace,channel,userData}) {
   const [socket] = useSocket(workspace);
-  const { data: userData } = useSWR<IUser>('/api/users', fetcher);
+  // const { data: userData } = useSWR<IUser>('/api/users', fetcher);
   const { data: channelsData } = useSWR<IChannel[]>(`/api/workspaces/${workspace}/channels`, fetcher);
   const channelData = channelsData?.find((v) => v.name === channel);
   const {
@@ -65,17 +61,19 @@ const Channel = () => {
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
+      // console.log("눌림")
+      // console.log(userData)
       if (chat?.trim() && chatData && channelData && userData) {
         const savedChat = chat;
         mutateChat((prevChatData) => {
           prevChatData?.[0].unshift({
             id: (chatData[0][0]?.id || 0) + 1,
             content: savedChat,
-            UserId: userData.id,
-            User: userData,
+            userid: userData.id,
+            user: userData,
             createdAt: new Date(),
-            ChannelId: channelData.id,
-            Channel: channelData,
+            channelid: channelData.id,
+            channel: channelData,
           });
           return prevChatData;
         }, false).then(() => {
@@ -90,6 +88,11 @@ const Channel = () => {
           .post(`/api/workspaces/${workspace}/channels/${channel}/chats`, {
             content: savedChat,
           })
+          .then(() => {console.log("성공")
+          if (scrollbarRef.current) {
+            console.log('scrollToBottom!', scrollbarRef.current?.getValues());
+            scrollbarRef.current.scrollToBottom();
+          }})
           .catch(console.error);
       }
     },
@@ -148,13 +151,12 @@ const Channel = () => {
   const onDrop = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(e);
       const formData = new FormData();
       if (e.dataTransfer.items) {
         // Use DataTransferItemList interface to access the file(s)
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           // If dropped items aren't files, reject them
-          console.log(e.dataTransfer.items[i]);
+          // console.log(e.dataTransfer.items[i]);
           if (e.dataTransfer.items[i].kind === 'file') {
             const file = e.dataTransfer.items[i].getAsFile();
             console.log(e, '.... file[' + i + '].name = ' + file.name);
@@ -194,7 +196,7 @@ const Channel = () => {
   return (
     <Container onDrop={onDrop} onDragOver={onDragOver}>
       <Header>
-        <span>#</span>
+        <span>#{channel}</span>
         <div style={{ display: 'flex', flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
           <span>{channelMembersData?.length}</span>
           <button
@@ -233,5 +235,3 @@ const Channel = () => {
     // <div></div>
   );
 };
-
-export default Channel;

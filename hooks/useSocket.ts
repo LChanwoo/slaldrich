@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
-import io from 'socket.io-client';
+import { Socket } from 'socket.io';
 
-const backUrl = '';
+import {io} from 'socket.io-client';
 
-const sockets = {};
-const useSocket = (workspace) => {
+const backUrl = 'http://localhost:3095';
+
+const sockets: { [key: string]: Socket } = {};
+const useSocket = (workspace?: string): [Socket | undefined, () => void] => {
   const disconnect = useCallback(() => {
     if (workspace && sockets[workspace]) {
       sockets[workspace].disconnect();
@@ -15,7 +17,7 @@ const useSocket = (workspace) => {
     return [undefined, disconnect];
   }
   if (!sockets[workspace]) {
-    sockets[workspace] = io.connect(`${backUrl}/ws-${workspace}`, {
+    sockets[workspace] = io(`${backUrl}/ws-${workspace}`, {
       transports: ['websocket'],
     });
     console.info('create socket', workspace, sockets[workspace]);

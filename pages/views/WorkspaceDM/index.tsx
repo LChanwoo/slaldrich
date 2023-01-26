@@ -42,17 +42,21 @@ import Link from 'next/link';
 import { Route } from 'react-router-dom';
 // import { useRouter } from 'next/router';
 import {Switch} from 'react-router-dom';
-const Workspace = () => {
+import { NextPageContext } from 'next';
+import urldecode from 'urldecode';
+
+const Workspace = ({workspace,id, user }) => {
   // const params = useParams<{ workspace?: string }>();
   const router = useRouter();
   // const href = useHref.asPath;
   // console.log(href)
-  const [,,workspace,type,channel] = router.asPath.split('/');
-  console.log(workspace)
+  // const [,,workspace,type,channel] = router.asPath.split('/');
+  // console.log(workspace)
   // console.log('params', params, 'location', location, 'routeMatch', routeMatch, 'history', history);
   // const { workspace } = params;
+  const userData = JSON.parse(user);
   const [socket, disconnectSocket] = useSocket(workspace);
-  const { data: userData, mutate: revalidateUser } = useSWR<IUser>('/api/users', fetcher);
+  // const { data: userData, mutate: revalidateUser } = useSWR<IUser>('/api/users', fetcher);
   const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher);
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false);
   const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false);
@@ -228,5 +232,12 @@ const Workspace = () => {
     </div>
   );
 };
+export async function getServerSideProps(ctx: NextPageContext) {
 
+  let { workspace,id,user } = ctx.query;
+  workspace = urldecode(workspace);
+  id = urldecode(id);
+  return { props: {workspace,id,user } }
+  
+}
 export default Workspace;

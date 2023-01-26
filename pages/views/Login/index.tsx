@@ -24,8 +24,11 @@ const LogIn = () => {
             withCredentials: true,
           },
         )
-        .then(() => {
+        .then((res) => {
           mutate();
+          // console.log('res.data: ', res.data)
+          sessionStorage.setItem('user', JSON.stringify(res.data));
+          // console.log(sessionStorage.getItem('user'))
         })
         .catch((error) => {
           setLogInError(error.response?.data?.code === 401);

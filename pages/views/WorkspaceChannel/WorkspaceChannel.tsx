@@ -41,18 +41,21 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Route } from 'react-router-dom';
 // import { useRouter } from 'next/router';
-import {Switch} from 'react-router-dom';
-const Workspace = () => {
-  // const params = useParams<{ workspace?: string }>();
+
+import urldecode from 'urldecode';
+import { NextPageContext } from 'next';
+
+
+
+const Workspace = ({workspace, channel,user}) => {
   const router = useRouter();
-  // const href = useHref.asPath;
-  // console.log(href)
-  const [,,workspace,type,channel] = router.asPath.split('/');
+  if(!user){
+    window.location.href = '/login';
+  }
   console.log(workspace)
-  // console.log('params', params, 'location', location, 'routeMatch', routeMatch, 'history', history);
-  // const { workspace } = params;
+
   const [socket, disconnectSocket] = useSocket(workspace);
-  const { data: userData, mutate: revalidateUser } = useSWR<IUser>('/api/users', fetcher);
+  const userData = JSON.parse(user);
   const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher);
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false);
   const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false);
@@ -89,7 +92,7 @@ const Workspace = () => {
           url: newUrl,
         })
         .then(() => {
-          revalidateUser();
+          // revalidateUser();
           setShowCreateWorkspaceModal(false);
           setNewWorkspace('');
           setNewUrl('');
@@ -141,10 +144,6 @@ const Workspace = () => {
     }
   }, [socket, userData, channelData]);
 
-  if (userData === false) {
-    router.push('/login');
-    // return <Redirect to="/login" />;
-  }
 
   return (
     <div>
@@ -198,7 +197,7 @@ const Workspace = () => {
           </MenuScroll>
         </Channels>
         <Chats>
-          <Channel/>
+          <Channel workspace={workspace} channel={channel} userData={userData}/>
         </Chats>
       </WorkspaceWrapper>
       <Modal show={showCreateWorkspaceModal} onCloseModal={onCloseModal}>
@@ -228,5 +227,17 @@ const Workspace = () => {
     </div>
   );
 };
+export async function getServerSideProps(ctx: NextPageContext) {
 
+  let { workspace,channel,user } = ctx.query;
+  // const router = useRouter();
+  // let [,, workspaces, ,channels] = router.asPath.split('/');
+  workspace = urldecode(workspace);
+  channel = urldecode(channel);
+  if(!user){
+    return { props: { workspace,channel } }
+  }
+  return { props: {workspace,channel,user } }
+  
+}
 export default Workspace;

@@ -13,27 +13,27 @@ interface Props {
   data: IDM | IChat;
 }
 
-const BACK_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3095' : 'https://sleact.nodebird.com';
+const BACK_URL =  'http://localhost:3095' ;
 const Chat: FC<Props> = memo(({ data }) => {
+  // console.log("data",data)
   // const { workspace } = useParams<{ workspace: string; channel: string }>();
   const router = useRouter();
   const [,,workspace] = router.asPath.split('/');
   const user: IUser = 'sender' in data ? data.sender : data.user;
   const result = useMemo<(string | JSX.Element)[] | JSX.Element>(
     () =>
-      data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') ? (
-        <img src={`${BACK_URL}/${data.content}`} style={{ maxHeight: 200 }} />
+      data.content.startsWith('public\\uploads\\') || data.content.startsWith('public/uploads/') ? (
+        <img src={`${BACK_URL}/${data.content.replace('public/','')}`} style={{ maxHeight: 200 }} />
       ) : (
         regexifyString({
           pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
           decorator(match, index) {
             const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
             if (arr) {
-              console.log('arr', arr)
               return (
-                <Link key={match + index + arr[1]} href={`/workspace/${workspace}/dm/${arr[2]}`}>
+                <a  href={`/workspace/${workspace}/dm/${arr[2]}`}>
                   @{arr[1]}
-                </Link>
+                </a>
               );
             }
             return <br key={index} />;

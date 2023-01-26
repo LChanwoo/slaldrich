@@ -58,10 +58,10 @@ const DirectMessage = () => {
           prevChatData?.[0].unshift({
             id: (chatData[0][0]?.id || 0) + 1,
             content: savedChat,
-            SenderId: myData.id,
-            Sender: myData,
-            ReceiverId: userData.id,
-            Receiver: userData,
+            senderId: myData.id,
+            sender: myData,
+            receiverId: userData.id,
+            receiver: userData,
             createdAt: new Date(),
           });
           return prevChatData;
@@ -77,10 +77,17 @@ const DirectMessage = () => {
           .post(`/api/workspaces/${workspace}/dms/${id}/chats`, {
             content: chat,
           })
+          .then(() => {
+            if (scrollbarRef.current) {
+              console.log('scrollToBottom!', scrollbarRef.current?.getValues());
+              scrollbarRef.current.scrollToBottom();
+              mutateChat();
+            }
+          })
           .catch(console.error);
       }
     },
-    [chat, workspace, id, myData, userData, chatData, mutateChat, setChat],
+    [chat, workspace, id, myData, userData, chatData, mutateChat, setChat,],
   );
 
   const onMessage = useCallback(
@@ -116,6 +123,7 @@ const DirectMessage = () => {
 
   useEffect(() => {
     socket?.on('dm', onMessage);
+    mutateChat();
     return () => {
       socket?.off('dm', onMessage);
     };

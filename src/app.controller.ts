@@ -20,17 +20,21 @@ export class AppController {
   public login() {
     return {};
   }
-  @Render('WorkspaceChannel')
+  @Render('WorkspaceChannel/WorkspaceChannel')
   @Get('/workspace/:workspace/channel/:channel')
-  public channel(@Param('workspace') workspace: string, @Param('channel') channel: string, @User() userData: Users) {
-    console.log(workspace, channel,userData)
-    return {workspace, channel,userData};
+  public channel(@Param('workspace') workspace: string, @Param('channel') channel: string, @User() user) {
+    console.log(workspace, channel,user)
+    console.log("여기에요 여기")
+    user = JSON.stringify(user);
+    console.log(user)
+    return {workspace, channel, user};
   }
   @Render('WorkspaceDM')
   @Get('/workspace/:workspace/dm/:id')
-  public dm(@Param('workspace') workspace: string, @Param('id') id: string) {
+  public dm(@Param('workspace') workspace: string, @Param('id') id: string, @User() user) {
     console.log(workspace, id)
-    return {workspace, id};
+    user = JSON.stringify(user);
+    return {workspace, id, user};
   }
   // @Render('Workspace')
   // @Get('/workspace/:workspace/channel/:channel')
