@@ -1,10 +1,12 @@
-import { Body, Controller, ForbiddenException, Get, NotFoundException, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, NotFoundException, Post, Res, Response, UseGuards } from '@nestjs/common';
+import { LoggedInGuard } from '../common/guards/logged-in.guard';
 import { User } from '../common/decorators/user.decorator';
 import { LocalAuthGuard } from '../common/guards/local-auth.guard';
 import { NotLoggedInGuard } from '../common/guards/not-logged-in.guard';
 import Users from '../entities/Users';
 import { JoinRequestDto } from './dto/join-request.dto';
 import { UsersService } from './users.service';
+// import { Response } from 'express';
 
 @Controller('api/users')
 export class UsersController {
@@ -34,6 +36,17 @@ export class UsersController {
       } else {
         throw new ForbiddenException();
       }
+    }
+
+    // @UseGuards(LoggedInGuard)
+    @Post('logout')
+    async logout(@Response() res ) {
+      res.clearCookie('connect.sid', {
+        httpOnly: true,
+        secure: false,
+      });
+      return res.send('ok');
+
     }
 
     @Get('test')

@@ -104,7 +104,7 @@ export const Channels = styled.nav`
   }
 
   & .bold {
-    color: white;
+    color: black;
     font-weight: bold;
   }
 

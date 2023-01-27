@@ -69,7 +69,8 @@ const Workspace = ({workspace, channel,user}) => {
     axios
       .post('/api/users/logout')
       .then(() => {
-        revalidateUser();
+        // revalidateUser();
+        router.push('/login');
       })
       .catch((error) => {
         console.dir(error);
