@@ -32,7 +32,7 @@ const EachChannel: VFC<Props> = ({ channel }) => {
   }, [mutate, location, workspace, channel]);
 
   return (
-    <Link key={channel.name}  href={`/workspace/${workspace}/channel/${channel.name}`}>
+    <Link key={channel.name}  href={`/workspace/${workspace}/channel/${channel.name}`} replace>
       <button className='ml-10 block'>
       <span className={count !== undefined && count > 0 ? 'bold' : undefined}># {channel.name}</span>
       {count !== undefined && count > 0 && <span className="count">{count}</span>}

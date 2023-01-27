@@ -41,8 +41,8 @@ const LogIn = () => {
   if (!error && userData) {
     console.log('로그인됨', userData);
     // return <Link href="/workspace/slald/channel/일반">go to workspace</Link>;
-    return router.push('/workspace/slald/channel/일반');
-    // return window.location.href = '/workspaces/slald/channels/일반';
+    // return router.push('/workspace/slald/channel/일반');
+    return window.location.href = '/workspace/slald/channel/일반';
   }
 
   return (
