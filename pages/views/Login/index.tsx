@@ -40,14 +40,14 @@ const LogIn = () => {
   console.log(error, userData);
   if (!error && userData) {
     console.log('로그인됨', userData);
-    // return <Link href="/workspace/sleact/channel/일반">go to workspace</Link>;
-    return router.push('/workspace/sleact/channel/일반');
-    // return window.location.href = '/workspaces/sleact/channels/일반';
+    // return <Link href="/workspace/slald/channel/일반">go to workspace</Link>;
+    return router.push('/workspace/slald/channel/일반');
+    // return window.location.href = '/workspaces/slald/channels/일반';
   }
 
   return (
     <div id="container">
-      <Header>Slaldrich</Header>
+      <Header>Slald</Header>
       <Form onSubmit={onSubmit}>
         <Label id="email-label">
           <span>이메일 주소</span>

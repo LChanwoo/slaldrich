@@ -58,14 +58,14 @@ const Signup = () => {
   );
   console.log("여기 옴??")
   if (userData) {
-    return router.push('/workspace/sleact/channel/일반')
+    return router.push('/workspace/slald/channel/일반')
     // return <Redirect to="/workspace/test" />;
   }
   console.log("여기 옴??")
 
   return (
     <div id="container">
-      <Header>Sleact</Header>
+      <Header>Slald</Header>
       <Form onSubmit={onSubmit}>
         <Label id="email-label">
           <span>이메일 주소</span>

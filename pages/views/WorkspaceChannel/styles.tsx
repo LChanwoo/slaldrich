@@ -6,7 +6,8 @@ export const RightMenu = styled.div`
 
 export const Header = styled.div`
   height: 38px;
-  background: #350d36;
+  // background: #350d36;
+  background: black;
   color: #ffffff;
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
   padding: 5px;
@@ -68,9 +69,10 @@ export const Workspaces = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  background: #3f0e40;
-  border-top: 1px solid rgb(82, 38, 83);
-  border-right: 1px solid rgb(82, 38, 83);
+  // background: #3f0e40;
+  background : white;
+  border-top: 1px solid #e5e7eb;;
+  border-right: 1px solid #e5e7eb;;
   vertical-align: top;
   text-align: center;
   padding: 15px 0 0;
@@ -80,9 +82,11 @@ export const Channels = styled.nav`
   width: 260px;
   display: inline-flex;
   flex-direction: column;
-  background: #3f0e40;
-  color: rgb(188, 171, 188);
+  // background: #3f0e40;
+  background: white;
+  color: black;
   vertical-align: top;
+  border-right: 1px solid #e5e7eb;; 
 
   & a {
     padding-left: 36px;
@@ -94,7 +98,8 @@ export const Channels = styled.nav`
     align-items: center;
 
     &.selected {
-      color: white;
+      // color: white;
+      color: black;
     }
   }
 
@@ -134,18 +139,20 @@ export const WorkspaceName = styled.button`
   border: none;
   width: 100%;
   text-align: left;
-  border-top: 1px solid rgb(82, 38, 83);
-  border-bottom: 1px solid rgb(82, 38, 83);
+  border-top: 1px solid #e5e7eb;;
+  border-bottom: 1px solid #e5e7eb;;
+  border-right: 1px solid #e5e7eb;;
   font-weight: 900;
   font-size: 24px;
   background: transparent;
+  // background:black;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   padding: 0;
   padding-left: 16px;
   margin: 0;
-  color: white;
+  color: black;
   cursor: pointer;
 `;
 
@@ -181,7 +188,7 @@ export const Chats = styled.div`
 `;
 
 export const AddButton = styled.button`
-  color: white;
+  color: black;
   font-size: 24px;
   display: inline-block;
   width: 40px;
@@ -196,11 +203,11 @@ export const WorkspaceButton = styled.button`
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: white;
+  background: black;
   border: 3px solid #3f0e40;
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: 700;
-  color: black;
+  color: white;
   cursor: pointer;
 `;

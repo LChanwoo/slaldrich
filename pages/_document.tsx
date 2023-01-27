@@ -46,6 +46,7 @@ import Document, {
             <link href="https://a.slack-edge.com/bv1-10/lato-regular-d9ce515.woff2" rel="preload" as="font" crossOrigin="anonymous"></link>
             <link href="https://a.slack-edge.com/bv1-10/lato-black-b64f5e4.woff2" rel="preload" as="font" crossOrigin="anonymous"></link>
             <link href="https://a.slack-edge.com/bv1-10/lato-bold-4b1dc11.woff2" rel="preload" as="font" crossOrigin="anonymous"></link>
+            <title>Slald</title>
           </Head>
           <body>
             <Main />

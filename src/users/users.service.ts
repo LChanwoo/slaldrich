@@ -78,8 +78,8 @@ export class UsersService {
         await this.usersRepository.save(newuser);
 
         const newworkspace = new Workspaces();
-        newworkspace.name = 'sleact';
-        newworkspace.url = 'sleact';
+        newworkspace.name = 'slald';
+        newworkspace.url = 'slald';
         newworkspace.ownerid = 1;
         await this.workspacesRepository.save(newworkspace);
         
